@@ -3,6 +3,18 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-pixel: var(--font-press-start-2p);
+
+  --color-arcade: #070b1e;
+  --color-arcade-2: #0d1433;
+  --color-arcade-3: #131c44;
+  --color-pac: #fee100;
+  --color-pac-dim: #a89400;
+  --color-ghost-red: #ff2d55;
+  --color-ghost-pink: #ff9ad5;
+  --color-ghost-cyan: #00e5ff;
+  --color-ghost-orange: #ffa52c;
+  --color-arcade-line: #232c55;
 }
 
 html {
@@ -15,5 +27,300 @@ body {
 }
 
 ::selection {
-  background: rgb(220 38 38 / 0.35);
+  background: rgb(254 225 0 / 0.35);
+}
+
+/* ---------- 像素工具 ---------- */
+
+.pixel-font {
+  font-family: var(--font-pixel);
+  letter-spacing: 0.05em;
+}
+
+/* 直角像素边框 + 硬阴影 */
+.pixel-border {
+  border: 2px solid #3a4a8a;
+  box-shadow:
+    0 0 0 2px var(--arcade-bg, #070b1e),
+    0 0 0 4px #3a4a8a,
+    0 6px 0 4px rgba(0, 0, 0, 0.45);
+}
+
+.pixel-border-pac {
+  border: 2px solid var(--color-pac);
+  box-shadow:
+    0 0 0 2px #070b1e,
+    0 0 0 4px var(--color-pac),
+    0 6px 0 4px rgba(0, 0, 0, 0.45);
+}
+
+/* 复古点阵背景 */
+.dot-grid {
+  background-image: radial-gradient(
+    circle,
+    rgba(90, 110, 200, 0.18) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+.dot-grid-pac {
+  background-image:
+    radial-gradient(circle, rgba(254, 225, 0, 0.35) 1.5px, transparent 1.5px),
+    radial-gradient(circle, rgba(90, 110, 200, 0.16) 1px, transparent 1px);
+  background-size:
+    34px 34px,
+    17px 17px;
+}
+
+/* ---------- 吃豆人 ---------- */
+
+@keyframes chomp {
+  0%,
+  100% {
+    background: conic-gradient(
+      from 90deg,
+      transparent 0 28deg,
+      var(--color-pac) 28deg 332deg,
+      transparent 332deg
+    );
+  }
+  50% {
+    background: conic-gradient(
+      from 90deg,
+      transparent 0 3deg,
+      var(--color-pac) 3deg 357deg,
+      transparent 357deg
+    );
+  }
+}
+
+.pacman {
+  border-radius: 9999px;
+  animation: chomp 0.45s steps(1) infinite;
+}
+
+.pacman-running {
+  animation:
+    chomp 0.45s steps(1) infinite,
+    pac-run var(--pac-duration, 6s) linear infinite;
+}
+
+@keyframes pac-run {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  49.9% {
+    transform: translateX(var(--pac-distance, 260px)) rotate(0deg);
+  }
+  50% {
+    transform: translateX(var(--pac-distance, 260px)) rotate(180deg);
+  }
+  100% {
+    transform: translateX(0) rotate(180deg);
+  }
+}
+
+/* ---------- 幽灵 ---------- */
+
+.ghost-body {
+  position: relative;
+  border-radius: 9999px 9999px 0 0;
+  animation: ghost-float 2.6s ease-in-out infinite;
+}
+
+.ghost-body::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 10px;
+  background: inherit;
+  clip-path: polygon(
+    0% 0%,
+    12.5% 0%,
+    12.5% 100%,
+    25% 100%,
+    25% 0%,
+    37.5% 0%,
+    37.5% 100%,
+    50% 100%,
+    50% 0%,
+    62.5% 0%,
+    62.5% 100%,
+    75% 100%,
+    75% 0%,
+    87.5% 0%,
+    87.5% 100%,
+    100% 100%,
+    100% 0%,
+    0% 0%
+  );
+}
+
+@keyframes ghost-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes ghost-blink {
+  0%,
+  45%,
+  55%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.08);
+  }
+}
+
+.ghost-eye {
+  animation: ghost-blink 2.8s steps(1) infinite;
+}
+
+/* ---------- 能量豆 ---------- */
+
+@keyframes dot-blink {
+  0%,
+  60%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 6px rgba(254, 225, 0, 0.7);
+  }
+  30% {
+    opacity: 0.35;
+    box-shadow: none;
+  }
+}
+
+.pac-dot {
+  background: var(--color-pac);
+  border-radius: 9999px;
+  animation: dot-blink 1.6s ease-in-out infinite;
+}
+
+@keyframes pellet-blink {
+  0%,
+  55%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(254, 225, 0, 0.8);
+  }
+  25% {
+    opacity: 0.25;
+    box-shadow: none;
+  }
+}
+
+.pac-pellet {
+  background: var(--color-pac);
+  border-radius: 9999px;
+  animation: pellet-blink 0.9s steps(1) infinite;
+}
+
+/* 吃豆人吃豆循环：豆子依次熄灭 */
+@keyframes dot-eaten {
+  0%,
+  12% {
+    opacity: 1;
+  }
+  13%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.dot-eaten {
+  animation: dot-eaten var(--eat-cycle, 6s) linear infinite;
+  animation-delay: calc(var(--eat-order, 0) * var(--eat-step, 0.6s));
+}
+
+/* 幽灵来回巡逻 */
+@keyframes ghost-run {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(calc(var(--pac-distance, 260px) * -0.9));
+  }
+  50% {
+    transform: translateX(calc(var(--pac-distance, 260px) * -0.9));
+  }
+  75% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.ghost-running {
+  animation:
+    ghost-float 2.6s ease-in-out infinite,
+    ghost-run var(--ghost-duration, 8s) ease-in-out infinite;
+}
+
+/* ---------- 文字效果 ---------- */
+
+@keyframes blink-hard {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+.blink {
+  animation: blink-hard 1.2s steps(1) infinite;
+}
+
+@keyframes pixel-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pixel-pop {
+  animation: pixel-pop 2.4s ease-in-out infinite;
+}
+
+/* 霓虹文字 */
+.pixel-text-pac {
+  color: var(--color-pac);
+  text-shadow:
+    2px 2px 0 rgba(254, 225, 0, 0.25),
+    4px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.pixel-text-cyan {
+  color: var(--color-ghost-cyan);
+  text-shadow:
+    2px 2px 0 rgba(0, 229, 255, 0.25),
+    4px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* 像素小分隔线 */
+.pixel-divider {
+  height: 6px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-pac) 0 12px,
+    transparent 12px 24px
+  );
 }

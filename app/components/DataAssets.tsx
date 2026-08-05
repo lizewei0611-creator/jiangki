@@ -1,3 +1,5 @@
+import { Ghost, PacDot, PixelCard, PixelTag } from "./arcade";
+
 const profile = {
   id: "CN-LZ-000001",
   name: "张三",
@@ -10,18 +12,22 @@ const profile = {
 
 const assets = [
   {
+    icon: "👤",
     title: "运动员数据",
     desc: "运动员 ID · 姓名 · 年龄 · 身高体重 · 所属地区 · 所属俱乐部 · 擅长位置 · 参赛记录 · 历史成绩 · 荣誉记录 · 体测数据 · 成长曲线",
   },
   {
+    icon: "🚣",
     title: "俱乐部数据",
     desc: "俱乐部名称 · 队员名单 · 领队/管理员 · 历史参赛记录 · 俱乐部成绩 · 俱乐部荣誉 · 队伍实力变化",
   },
   {
+    icon: "🏁",
     title: "赛事数据",
     desc: "赛事名称 · 赛事地点 · 赛事组别 · 报名队伍 · 参赛运动员 · 比赛成绩 · 名次 · 官方认证成绩",
   },
   {
+    icon: "🏆",
     title: "成绩与表现数据",
     desc: "100米成绩 · 200米成绩 · 500米成绩 · 150米体测成绩 · 选秀顺位 · 队伍排名 · 个人历史表现",
   },
@@ -29,13 +35,13 @@ const assets = [
 
 export default function DataAssets() {
   return (
-    <section id="data" className="border-t border-white/5 py-24">
+    <section id="data" className="border-t-2 border-arcade-line py-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-14 text-center">
-          <span className="text-sm font-medium tracking-widest text-red-400">
-            DATA ASSETS
+          <span className="pixel-font text-[10px] tracking-widest text-ghost-pink">
+            PLAYER SELECT
           </span>
-          <h2 className="mt-3 text-3xl font-bold text-white md:text-4xl">
+          <h2 className="mt-4 text-3xl font-bold text-white md:text-4xl">
             桨刻最重要的资产，不是代码，是数据
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-slate-400">
@@ -43,22 +49,18 @@ export default function DataAssets() {
           </p>
         </div>
         <div className="grid gap-6 lg:grid-cols-5">
-          <div className="rounded-2xl border border-red-600/30 bg-gradient-to-b from-red-950/40 to-slate-900/60 p-6 lg:col-span-2">
+          <PixelCard pac className="p-6 lg:col-span-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium tracking-widest text-red-400">
-                运动员数字档案
-              </span>
-              <span className="rounded-full bg-red-600/20 px-2.5 py-0.5 text-xs text-red-300">
-                示例
-              </span>
+              <PixelTag color="#fee100">PLAYER 1</PixelTag>
+              <PacDot size={8} />
             </div>
             <div className="mt-6 flex items-center gap-4">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-red-500 to-amber-400 text-2xl font-bold text-white">
-                张
+              <div className="flex h-16 w-16 items-center justify-center border-2 border-pac bg-pac/10 text-2xl font-bold text-pac pixel-pop">
+                {profile.name.slice(0, 1)}
               </div>
               <div>
                 <p className="text-lg font-bold text-white">{profile.name}</p>
-                <p className="font-mono text-xs text-red-300">{profile.id}</p>
+                <p className="pixel-font text-[10px] text-pac">{profile.id}</p>
               </div>
             </div>
             <dl className="mt-6 space-y-3 text-sm">
@@ -71,7 +73,7 @@ export default function DataAssets() {
               ].map(([k, v]) => (
                 <div
                   key={k}
-                  className="flex items-center justify-between border-b border-white/5 pb-3"
+                  className="flex items-center justify-between border-b-2 border-arcade-line pb-3"
                 >
                   <dt className="text-slate-400">{k}</dt>
                   <dd className="font-medium text-white">{v}</dd>
@@ -79,31 +81,44 @@ export default function DataAssets() {
               ))}
             </dl>
             <div className="mt-6">
-              <p className="mb-2 text-xs text-slate-500">成长曲线</p>
+              <p className="mb-2 pixel-font text-[10px] text-ghost-cyan">
+                GROWTH CURVE
+              </p>
               <div className="flex h-14 items-end gap-1.5">
                 {[30, 45, 38, 60, 55, 75, 70, 90].map((h, i) => (
                   <div
                     key={i}
                     style={{ height: `${h}%` }}
-                    className="flex-1 rounded-sm bg-gradient-to-t from-red-700 to-red-400"
+                    className="flex-1 border border-pac/40 bg-gradient-to-t from-arcade-3 to-pac/60"
                   />
                 ))}
               </div>
             </div>
-          </div>
+          </PixelCard>
           <div className="grid gap-6 sm:grid-cols-2 lg:col-span-3">
             {assets.map((a) => (
-              <div
-                key={a.title}
-                className="rounded-2xl border border-white/10 bg-slate-900/60 p-6 transition-colors hover:border-white/20"
-              >
-                <h3 className="flex items-center gap-2 text-base font-bold text-white">
-                  <span className="h-2 w-2 rounded-full bg-red-500" />
-                  {a.title}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-slate-400">{a.desc}</p>
-              </div>
+              <PixelCard key={a.title} className="p-6">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 items-center justify-center border-2 border-pac/40 bg-arcade-3 text-base">
+                    {a.icon}
+                  </span>
+                  <h3 className="text-base font-bold text-white">{a.title}</h3>
+                </div>
+                <p className="mt-4 text-sm leading-6 text-slate-400">{a.desc}</p>
+                <div className="mt-4 flex gap-2">
+                  {[0, 1, 2].map((i) => (
+                    <PacDot key={i} size={7} />
+                  ))}
+                </div>
+              </PixelCard>
             ))}
+            <div className="flex items-center justify-center gap-4 border-2 border-dashed border-arcade-line py-6 sm:col-span-2">
+              <Ghost color="#ff9ad5" size={26} />
+              <span className="pixel-font text-[10px] text-slate-500">
+                MORE DATA · POWER-UP INCOMING
+              </span>
+              <Ghost color="#ffa52c" size={26} />
+            </div>
           </div>
         </div>
       </div>
