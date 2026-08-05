@@ -31,7 +31,7 @@ export default function Hero() {
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            href="#cta"
+            href="/demo/"
             className="rounded-full bg-red-600 px-8 py-3.5 text-base font-medium text-white shadow-lg shadow-red-600/30 transition-all hover:bg-red-500 hover:shadow-red-500/40"
           >
             免费创建赛事

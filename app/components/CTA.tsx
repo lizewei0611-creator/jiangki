@@ -14,7 +14,7 @@ export default function CTA() {
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            href="mailto:hello@jiangki.com"
+            href="/demo/"
             className="rounded-full bg-red-600 px-8 py-3.5 text-base font-medium text-white shadow-lg shadow-red-600/30 transition-all hover:bg-red-500"
           >
             免费创建赛事
@@ -27,7 +27,7 @@ export default function CTA() {
           </a>
         </div>
         <p className="mt-6 text-sm text-slate-500">
-          无论是办一场 5000 元的赛事，还是共建一个行业数据平台，我们都欢迎。
+          无需注册，在线体验完整赛事流程：报名、队伍、成绩、门户与运动员档案
         </p>
       </div>
     </section>
