@@ -371,6 +371,12 @@ function AthleteProfile({
         <p className="mt-6 border-t border-white/5 pt-4 text-xs leading-5 text-slate-600">
           档案由桨刻自动沉淀：运动员的每一次参赛、每一条成绩都会累积到数字身份中。比赛会结束，数据不会结束。
         </p>
+        <Link
+          href={`/demo/athlete/?name=${encodeURIComponent(athlete.name)}&number=${encodeURIComponent(athlete.number)}`}
+          className="mt-5 block rounded-full bg-red-600 py-3 text-center text-sm font-medium text-white transition-colors hover:bg-red-500"
+        >
+          查看完整档案 →
+        </Link>
       </div>
     </div>
   );

@@ -386,12 +386,20 @@ function TeamsTab({
                             {a.seat || "—"}
                           </td>
                           <td className="py-2.5 text-right">
-                            <button
-                              onClick={() => removeAthlete(team.id, a.id)}
-                              className="text-xs text-slate-600 hover:text-red-400"
-                            >
-                              移除
-                            </button>
+                            <div className="flex items-center justify-end gap-4">
+                              <Link
+                                href={`/demo/athlete/?name=${encodeURIComponent(a.name)}&number=${encodeURIComponent(a.number)}`}
+                                className="text-xs text-red-400 hover:text-red-300"
+                              >
+                                档案
+                              </Link>
+                              <button
+                                onClick={() => removeAthlete(team.id, a.id)}
+                                className="text-xs text-slate-600 hover:text-red-400"
+                              >
+                                移除
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}
