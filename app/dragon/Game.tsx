@@ -12,8 +12,8 @@ import Leaderboard from "../components/Leaderboard";
 
 const W = 960;
 const H = 540;
-const GAME_SECONDS = 60;
-const BASE_SPEED = 150;
+const GAME_SECONDS = 10;
+const BASE_SPEED = 165;
 const CITY_SCORE = 150;
 const DOT_SCORE = 10;
 
@@ -111,7 +111,7 @@ export default function Game() {
       if (phase === "playing") {
         w.time -= dt;
         w.windT += dt;
-        if (w.windT > 8) {
+        if (w.windT > 4) {
           w.windT = 0;
           const r = Math.random();
           w.wind = r < 0.6 ? 0 : r < 0.8 ? 0.45 : -0.35;
@@ -290,7 +290,7 @@ export default function Game() {
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-arcade/70 backdrop-blur-[2px]">
               <p className="pixel-font text-lg text-pac blink">READY?</p>
               <p className="max-w-md px-6 text-center text-sm text-slate-300">
-                驾驶小龙舟漫游大湾区：收集浪花点，点亮 11 座城市，60 秒内尽力得分！
+                驾驶小龙舟漫游大湾区：收集浪花点，点亮 11 座城市，10 秒极限冲刺尽力得分！
               </p>
               <button
                 onClick={start}

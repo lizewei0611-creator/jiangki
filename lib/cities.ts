@@ -125,10 +125,10 @@ export const PEARL_CITIES = [
 ];
 
 export const TITLES: { min: number; name: string; emoji: string }[] = [
-  { min: 1600, name: "大湾区龙舟王", emoji: "👑" },
-  { min: 1300, name: "湾区全明星预备役", emoji: "⭐" },
-  { min: 900, name: "珠江弄潮儿", emoji: "🌊" },
-  { min: 500, name: "湾区新桨手", emoji: "🚣" },
+  { min: 1200, name: "大湾区龙舟王", emoji: "👑" },
+  { min: 900, name: "湾区全明星预备役", emoji: "⭐" },
+  { min: 600, name: "珠江弄潮儿", emoji: "🌊" },
+  { min: 350, name: "湾区新桨手", emoji: "🚣" },
   { min: 0, name: "珠江探索者", emoji: "🧭" },
 ];
 
