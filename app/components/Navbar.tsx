@@ -3,9 +3,9 @@ import { Pacman } from "./arcade";
 const navLinks = [
   { href: "#platform", label: "平台" },
   { href: "#data", label: "数据资产" },
-  { href: "#shift", label: "核心转变" },
   { href: "#roadmap", label: "发展路径" },
   { href: "#case", label: "横琴案例" },
+  { href: "/dragon/", label: "龙舟漫游" },
 ];
 
 export default function Navbar() {
@@ -32,12 +32,20 @@ export default function Navbar() {
             </a>
           ))}
         </nav>
-        <a
-          href="/demo/"
-          className="border-2 border-pac bg-pac px-4 py-2 text-sm font-bold text-black transition-transform hover:-translate-y-0.5"
-        >
-          免费创建赛事
-        </a>
+        <div className="flex items-center gap-3">
+          <a
+            href="/dragon/"
+            className="hidden border-2 border-ghost-cyan px-4 py-2 text-sm font-bold text-ghost-cyan transition-transform hover:-translate-y-0.5 sm:block"
+          >
+            🎮 龙舟漫游
+          </a>
+          <a
+            href="/demo/"
+            className="border-2 border-pac bg-pac px-4 py-2 text-sm font-bold text-black transition-transform hover:-translate-y-0.5"
+          >
+            免费创建赛事
+          </a>
+        </div>
       </div>
     </header>
   );
