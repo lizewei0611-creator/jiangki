@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Game from "./Game";
+import GameArea from "./GameArea";
 import { CITIES, HENGQIN } from "@/lib/cities";
 import {
   Ghost,
@@ -107,11 +107,11 @@ function GameSection() {
             大湾区龙舟漫游
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-slate-400">
-            限时 60 秒：收集浪花点积攒划桨力量，经过城市节点点亮大湾区。
-              小心顺风与逆风，把你的名字刻进排行榜。
+            竞渡冲刺：25 秒踩鼓点划桨，用桨频说话。漫游探索：60 秒点亮 11 城。
+              两种玩法，一套排行榜。
           </p>
         </div>
-        <Game />
+        <GameArea />
       </div>
     </section>
   );

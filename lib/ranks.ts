@@ -7,6 +7,8 @@ export interface RankEntry {
   cities: string[];
   title: string;
   ts: number;
+  spm?: number;
+  perfect?: number;
 }
 
 const KEY = "jiangki.ranks.v1";
