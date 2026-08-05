@@ -9,7 +9,7 @@ import {
   recordStars,
 } from "@/lib/calib";
 import {
-  ensureAudio,
+  unlockAudio,
   playDrum,
   playGong,
   playJudge,
@@ -103,7 +103,8 @@ interface RaceState {
     idx: number;
     samples: number[];
   };
-  lastBeatPlayed: number;
+  beatPlayedIdx: number;
+  calibPlayedIdx: number;
 }
 
 type Phase = "idle" | "playing" | "over" | "calib";
@@ -180,7 +181,8 @@ export default function RaceMode() {
     opponents: [],
     done: false,
     calib: { startWall: 0, idx: 0, samples: [] },
-    lastBeatPlayed: -1,
+    beatPlayedIdx: 0,
+    calibPlayedIdx: 0,
   });
 
   const buildPhases = (song: Song): BeatPhase[] => {
@@ -224,7 +226,8 @@ export default function RaceMode() {
     s.missStreak = 0;
     s.judges = [];
     s.done = false;
-    s.lastBeatPlayed = -1;
+    s.beatPlayedIdx = 0;
+    s.calibPlayedIdx = 0;
     const base = song.spms[1];
     s.opponents = [0, 1, 3, 4].map((lane) => ({
       lane,
@@ -236,7 +239,7 @@ export default function RaceMode() {
     setSaved(null);
     phaseRef.current = "playing";
     setPhase("playing");
-    ensureAudio();
+    unlockAudio();
   };
 
   const startCalib = () => {
@@ -247,7 +250,7 @@ export default function RaceMode() {
     setCalibProgress(0);
     phaseRef.current = "calib";
     setPhase("calib");
-    ensureAudio();
+    unlockAudio();
   };
 
   const hit = () => {
@@ -367,9 +370,9 @@ export default function RaceMode() {
         const idx = s.calib.idx;
         const beatNow = s.t;
         for (let i = 0; i < CALIB_BEATS.length; i++) {
-          if (i !== s.lastBeatPlayed && CALIB_BEATS[i] - beatNow < 0.01) {
+          if (i !== s.calibPlayedIdx && CALIB_BEATS[i] - beatNow < 0.01) {
             playDrum();
-            s.lastBeatPlayed = i;
+            s.calibPlayedIdx = i;
           }
         }
         void idx;
@@ -385,11 +388,11 @@ export default function RaceMode() {
         }
         const cur = s.phases[s.phaseIdx];
 
-        // 节拍鼓声
-        if (s.lastBeatPlayed < s.beatIdx && s.beatIdx > 0) {
-          if (s.beatIdx % 4 === 0) playGong();
+        // 节拍提示音：按节拍时间轴独立播放（每拍鼓声，每 4 拍锣声），不依赖命中
+        while (s.beatPlayedIdx < s.beats.length && s.beats[s.beatPlayedIdx] <= s.t) {
+          if (s.beatPlayedIdx % 4 === 0) playGong();
           else playDrum(s.phaseIdx === 2);
-          s.lastBeatPlayed = s.beatIdx;
+          s.beatPlayedIdx++;
         }
 
         // 实际桨频

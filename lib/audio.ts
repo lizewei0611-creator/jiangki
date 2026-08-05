@@ -7,8 +7,26 @@ export function ensureAudio(): AudioContext {
       (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     audioCtx = new AC();
   }
-  if (audioCtx.state === "suspended") void audioCtx.resume();
+  if (audioCtx.state === "suspended") {
+    // 必须在用户手势回调中同步调用，浏览器才允许恢复
+    void audioCtx.resume();
+  }
   return audioCtx;
+}
+
+/** 在用户手势（点击开始/校准）时调用，解锁音频通道并播放提示鼓声 */
+export function unlockAudio(): void {
+  const ctx = ensureAudio();
+  if (ctx.state === "suspended") {
+    const t = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    osc.frequency.value = 0;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    osc.connect(g).connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + 0.01);
+  }
 }
 
 /** 低音鼓（每拍） */
